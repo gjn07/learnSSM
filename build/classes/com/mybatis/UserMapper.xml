@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.UserDao对应Dao接口 -->
+<mapper namespace="com.dao.UserDao">
+	<!-- 查询用户信息 -->
+	<select id="selectUserByNumber" parameterType="Integer"
+		resultType="com.po.User">
+		select * from user where number = #{number}
+	</select>
+	<insert id="insertUser" parameterType="com.po.User"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into user
+		(number,password,role_id,phone,createdate,username,remark)
+		values(#{number},#{password},#{role_id},#{phone},#{createdate},#{username},#{remark})
+	</insert>
+	<delete id="deleteUserByNumber" parameterType="Integer">
+		delete from user
+		where number = #{number}
+	</delete>
+	<update id="updateUserByNumber" parameterType="com.po.User">
+		update user
+		<set>
+			<if test="password != null">password=#{password},</if>
+			<if test="role_id != null">role_id=#{role_id},</if>
+			<if test="phone != null">phone=#{phone},</if>
+			<if test="createdate != null">createdate=#{createdate},</if>
+			<if test="username != null">username=#{username},</if>
+			<if test="remark != null">remark=#{remark},</if>
+		</set>
+		where number = #{number}
+	</update>
+	<select id="selectAllUser" resultType="map">
+		select * from user
+	</select>
+</mapper>
